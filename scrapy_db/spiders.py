@@ -12,7 +12,7 @@ from .utils import TextColor, is_dict
 
 class DBBase(object):
     """
-    基类
+    Base class
     """
     table_name = None
     db_batch_size = None

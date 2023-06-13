@@ -10,18 +10,17 @@ from .db import DBModel
 
 class DBDupeFilter(BaseDupeFilter):
     """
-    重复过滤器
-
+    Duplicate filter
     """
 
     logger = logging.getLogger(__name__)
 
     def __init__(self, table, debug=False):
         """
-        初始化
+        Initialize
 
-        :param table: 表名
-        :param debug: DUPEFILTER_DEBUG，重复值是否打印
+        :param table: Table name
+        :param debug: DUPEFILTER_DEBUG, whether to print duplicate values
         """
         self.table: DBModel = table
         self.debug = debug
@@ -30,10 +29,10 @@ class DBDupeFilter(BaseDupeFilter):
     @classmethod
     def from_settings(cls, settings):
         """
-        通过 settings 创建实例
+        Create an instance through settings
 
-        :param settings: spider 的 settings
-        :return: 当前类的实例
+        :param settings: Spider settings
+        :return: Instance of the current class
         """
         key = defaults.SCHEDULER_DUPEFILTER_TABLE % {'timestamp': int(time.time())}
         table = DBModel.build_model_from_settings(settings, key, 'dupelifter')
@@ -43,21 +42,21 @@ class DBDupeFilter(BaseDupeFilter):
     @classmethod
     def from_crawler(cls, crawler):
         """
-        通过crawler创建实例
+        Create an instance through crawler
 
-        :param crawler: crawler对象
-        :return: 当前类的实例
+        :param crawler: Crawler object
+        :return: Instance of the current class
         """
         return cls.from_settings(crawler.settings)
 
     def request_seen(self, request):
         """
-        如果已经请求过，返回 True
+        Returns True if the request has already been made
 
-        :param request: 请求对象
-        :return: 是否已经请求过
+        :param request: Request object
+        :return: Whether the request has been made
         """
-        # request_fingerprint解除警告
+        # request_fingerprint remove warnings
         fp = fingerprint(request).hex()
         added = self.table.db.select().where(self.table.db.key == fp).count()
         self.table.push(**{'key': fp})
@@ -66,10 +65,10 @@ class DBDupeFilter(BaseDupeFilter):
     @classmethod
     def from_spider(cls, spider):
         """
-        通过 spider 创建实例
+        Create an instance through spider
 
-        :param spider: spider对象
-        :return: 当前类的实例
+        :param spider: Spider object
+        :return: Instance of the current class
         """
         settings = spider.settings
         key = settings.get("SCHEDULER_DUPEFILTER_KEY", defaults.SCHEDULER_DUPEFILTER_TABLE) % {'spider': spider.name}
@@ -79,16 +78,16 @@ class DBDupeFilter(BaseDupeFilter):
 
     def close(self, reason=''):
         """
-        在关闭时清除数据
+        Clear data during shutdown
 
-        :param reason: 关闭原因
+        :param reason: Shutdown reason
         :return: None
         """
         self.clear()
 
     def clear(self):
         """
-        清除指纹数据
+        Clear fingerprint data
 
         :return: None
         """
@@ -96,10 +95,10 @@ class DBDupeFilter(BaseDupeFilter):
 
     def log(self, request, spider):
         """
-        打印请求
+        Prints the request
 
-        :param request: 请求
-        :param spider: spider 对象
+        :param request: Request
+        :param spider: Spider object
         :return: None
         """
         if self.debug:

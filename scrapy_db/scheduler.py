@@ -7,7 +7,7 @@ from . import defaults
 
 class Scheduler(object):
     """
-    调度器
+    Scheduler
 
     """
 
@@ -21,16 +21,16 @@ class Scheduler(object):
                  idle_before_close=0,
                  serializer=None):
         """
-        初始化调度器
+        Initialize scheduler.
 
-        :param persist: 是否恢复爬虫
-        :param flush_on_start: 启动时清除进度
-        :param queue_table: 队列表名
-        :param queue_cls: 队列类
-        :param dupefilter_table: 指纹表名
-        :param dupefilter_cls: 指纹类
-        :param idle_before_close: 空闲时最大的超时时间
-        :param serializer: 序列化工具
+        :param persist: whether to restore previous progress
+        :param flush_on_start: whether to clear progress when starting the crawler
+        :param queue_table: name of the queue table
+        :param queue_cls: class of the queue
+        :param dupefilter_table: name of the duplicate filter table
+        :param dupefilter_cls: class of the duplicate filter
+        :param idle_before_close: maximum timeout when idle
+        :param serializer: serialization tool
         """
         self.df = None
         self.queue = None
@@ -79,10 +79,10 @@ class Scheduler(object):
     @classmethod
     def from_crawler(cls, crawler):
         """
-        注入 crawler
+        Inject crawler.
 
         :param crawler: crawler
-        :return: 调度器对象
+        :return: scheduler object
         """
         instance = cls.from_settings(crawler.settings)
         instance.stats = crawler.stats

@@ -1,6 +1,6 @@
 import time
 
-from src.scrapy_db.utils import execute_with_timeout, CustomPickle
+from scrapy_db.utils import execute_with_timeout, CustomPickle
 
 
 def test_execute_with_timeout(mocker):

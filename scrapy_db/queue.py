@@ -1,26 +1,23 @@
-from src.scrapy_db.db import DBModel
-from src.scrapy_db.utils import CustomPickle
+from scrapy.utils.reqser import request_to_dict
+from scrapy.utils.request import request_from_dict
 
-try:
-    from scrapy.utils.request import request_from_dict
-except ImportError:
-    from scrapy.utils.reqser import request_to_dict, request_from_dict
+from scrapy_db.db import DBModel
+from scrapy_db.utils import CustomPickle
 
 
 class Base(object):
     """
-    基础队列类
-
+    Basic queue class
     """
 
     def __init__(self, spider, table_name, key, serializer=None):
         """
-        初始化爬虫队列对象
+        Initialize spider queue object
 
-        :param spider: spider 对象
-        :param table_name: 表名
-        :param key: 当前对象 key
-        :param serializer: 序列化
+        :param spider: spider object
+        :param table_name: table name
+        :param key: current object key
+        :param serializer: serialization
         """
         if serializer is None:
             serializer = CustomPickle
@@ -34,10 +31,10 @@ class Base(object):
 
     def _encode_request(self, request):
         """
-        编码请求
+        Encode request
 
-        :param request: 请求对象
-        :return: 编码结果
+        :param request: request object
+        :return: encode result
         """
         try:
             obj = request.to_dict(spider=self.spider)
@@ -47,10 +44,10 @@ class Base(object):
 
     def _decode_request(self, encoded_request):
         """
-        解码请求
+        Decode request
 
-        :param encoded_request: 需要解码的请求
-        :return: 解码结果
+        :param encoded_request: request to be decoded
+        :return: decoding result
         """
         obj = self.serializer.loads(encoded_request)
         return request_from_dict(obj, spider=self.spider)

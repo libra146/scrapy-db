@@ -5,21 +5,20 @@ from abc import ABCMeta, abstractmethod
 from peewee import DateTimeField, CharField, BigAutoField, Model, IntegerField, SQL, BooleanField
 from playhouse.db_url import connect
 
-from src.scrapy_db.utils import execute_with_timeout
+from scrapy_db.utils import execute_with_timeout
 
 
 class BaseDB(metaclass=ABCMeta):
     """
-    数据库队列基类
-
+    Base class for database queues
     """
 
     @abstractmethod
     def push(self, **value):
         """
-        将元素放到队列内
-        
-        :param value: 需要放到队列中的元素
+        Add an element to the queue
+
+        :param value: The element to add to the queue
         :return: None
         """
         pass
@@ -27,35 +26,35 @@ class BaseDB(metaclass=ABCMeta):
     @abstractmethod
     def pop(self, timeout=0, desc=True):
         """
-        弹出队列内的元素，支持先入先出和先入后出
+        Remove an element from the queue, support FIFO and LIFO
 
-        :param timeout: 超时参数
-        :param desc: 先入先出还是先入后出，默认是先入先出
-        :return: 队列内的元素
+        :param timeout: Timeout parameter
+        :param desc: FIFO or LIFO, default is FIFO
+        :return: The element removed from the queue
         """
         pass
 
     @abstractmethod
     def __len__(self):
         """
-        判断队列内元素的数量
+        Get the number of elements in the queue
 
-        :return: 队列内元素的数量
+        :return: The number of elements in the queue
         """
         pass
 
     @abstractmethod
     def pop_by_score(self, timeout=0):
         """
-        根据权重弹出数据
+        Remove an element from the queue by score
 
-        :param timeout: 超时参数
-        :return: 队列内的元素
+        :param timeout: Timeout parameter
+        :return: The element removed from the queue
         """
         pass
 
 
-# 模型类的默认字段
+# The default fields for model classes
 _attributes = {'id': BigAutoField(primary_key=True),
                'create_time': DateTimeField(default=datetime.datetime.now,
                                             constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')]),
@@ -66,18 +65,18 @@ _attributes = {'id': BigAutoField(primary_key=True),
 
 def get_model_class_for_db(name, attrs) -> Model:
     """
-    根据名字和属性返回模型类
+    Return a model class based on name and attributes
 
-    :param name: 类名前缀
-    :param attrs: 模型类的属性
-    :return: 模型类
+    :param name: The prefix of the class name
+    :param attrs: The attributes of the model class
+    :return: The model class
     """
     attrs_ = copy.deepcopy(_attributes)
     attrs_.update(attrs)
     return type(f'{name.capitalize()}Model', (Model,), attrs_)  # noqa
 
 
-# 一个字典，存储模型类的字段
+# A dictionary that stores the fields of the model class
 _params = {
     'dupelifter': {
         'key': CharField(),
@@ -96,10 +95,10 @@ _params = {
 
 def db_require(fun):
     """
-    校验 db 是否存在
+    Check if db exists
 
-    :param fun: 需要执行的函数
-    :return: inner 函数
+    :param fun: The function to be executed
+    :return: The inner function
     """
 
     def inner(self, *args, **kwargs):
@@ -117,12 +116,12 @@ class DBModel(BaseDB):
     @classmethod
     def build_model_from_settings(cls, settings, name, key):
         """
-        根据设置和名字初始化当前类的实例，依赖注入
+        Initialize an instance of the current class based on the settings and name
 
-        :param settings: 设置
-        :param name: 名字
-        :param key: 字段字典的 key
-        :return: 模型类的实例
+        :param settings: The settings
+        :param name: The name
+        :param key: The key in the field dictionary
+        :return: An instance of the model class
         """
         attrs = _params.get(key)
         if not attrs:
@@ -146,7 +145,7 @@ class DBModel(BaseDB):
     @execute_with_timeout
     @db_require
     def pop(self, timeout=0, desc=True, batch_size=None):
-        if batch_size == 1:
+        if not batch_size:
             result = self.db.select().where(self.db.deleted == 0).order_by(
                 self.db.id.desc() if desc else self.db.id.asc()).limit(batch_size).first()
             if result:

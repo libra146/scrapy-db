@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "scrapy-db"
+version = "0.0.1"
+description = ""
+authors = ["libra146 <shumeipai146@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "scrapy_db" }]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+scrapy = "^2.9.0"
+peewee = "^3.16.2"
+pytest = "^7.3.2"
+pytest-mock = "^3.10.0"
+urllib3 = "1.26.16"
+pymysql = "^1.0.3"
+twine = "^4.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

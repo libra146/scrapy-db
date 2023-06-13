@@ -1,7 +1,17 @@
+import datetime
+from unittest import mock
+
 import pytest
+from peewee import DateTimeField, BigAutoField
 from scrapy import Request, Spider
 
-from src.scrapy_db.queue import LifoQueue
+from scrapy_db.queue import LifoQueue, PriorityQueue
+
+# The default fields for model classes
+_attributes = {'id': BigAutoField(primary_key=True),
+               'create_time': DateTimeField(default=datetime.datetime.now),
+               'update_time': DateTimeField(default=datetime.datetime.now),
+               'Meta': type('Meta', (object,), {'table_name': None, 'database': None})}
 
 
 class TestSpider(Spider):
@@ -11,6 +21,7 @@ class TestSpider(Spider):
         return Request(url='https://www.baidu.com', callback=self.parse, meta={'meta': 'test'})
 
 
+@mock.patch('scrapy_db.db._attributes', _attributes)
 def test_fifo_queue():
     settings = {
         'DB_URL': 'sqlite:///:memory:'
@@ -25,7 +36,7 @@ def test_fifo_queue():
     with pytest.raises(TypeError) as _:
         LifoQueue(spider, 'test', 'queue', object)
 
-    queue = LifoQueue(spider, 'test', 'queue')
+    queue = PriorityQueue(spider, 'test', 'queue')
     request = Request(url='https://www.baidu.com', meta={'key1': 'key1'})
     encode_request = queue._encode_request(request)
     assert isinstance(encode_request, str)
