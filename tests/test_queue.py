@@ -14,7 +14,7 @@ _attributes = {'id': BigAutoField(primary_key=True),
                'Meta': type('Meta', (object,), {'table_name': None, 'database': None})}
 
 
-class TestSpider(Spider):
+class MySpider(Spider):
     name = 'test'
 
     def parse(self, response, **kwargs):
@@ -26,7 +26,7 @@ def test_fifo_queue():
     settings = {
         'DB_URL': 'sqlite:///:memory:'
     }
-    spider = TestSpider
+    spider = MySpider
     spider.settings = settings
     queue = LifoQueue(spider, 'test', 'queue')
     assert queue.db.db._meta.table_name == 'test'
