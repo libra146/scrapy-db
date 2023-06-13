@@ -15,6 +15,7 @@ pytest-mock = "^3.10.0"
 urllib3 = "1.26.16"
 pymysql = "^1.0.3"
 twine = "^4.0.2"
+codecov = "^2.1.13"
 
 
 [build-system]
