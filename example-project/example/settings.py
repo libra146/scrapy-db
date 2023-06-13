@@ -103,4 +103,4 @@ SCHEDULER_DUPEFILTER_CLASS = 'scrapy_db.dupefilter.DBDupeFilter'
 
 SCHEDULER_PERSIST = True
 # DB config
-DB_URL = 'mysql://root:123456@myhome.d77.xyz:3306/test'
+DB_URL = ''
