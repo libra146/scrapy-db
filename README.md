@@ -1,4 +1,5 @@
 # scrapy-db
+[![codecov](https://codecov.io/github/libra146/scrapy-db/branch/main/graph/badge.svg?token=O9L0DVI0BR)](https://codecov.io/github/libra146/scrapy-db)
 
 Similar to [scrapy-redis](https://github.com/rmax/scrapy-redis), using the database as a queue, database-based scrapy
 components.
