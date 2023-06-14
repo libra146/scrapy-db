@@ -1,6 +1,6 @@
 import time
 
-from scrapy_db.utils import execute_with_timeout, CustomPickle
+from scrapy_db.utils import execute_with_timeout, CustomPickle, is_dict
 
 
 def test_execute_with_timeout(mocker):
@@ -46,6 +46,10 @@ def test_custom_json():
     assert isinstance(r, dict)
     assert r['test'] == 'value'
     assert isinstance(r['test_bytes'], bytes)
-    # assert isinstance(result, dict)
-    # assert result == a
-    # assert a['test_bytes'] == a['test_bytes']
+
+
+def test_is_dict():
+    assert isinstance(is_dict(0), int)
+    assert is_dict(00) == 0
+    assert isinstance(is_dict('aa'), str)
+    assert isinstance(is_dict('{}'), dict)
