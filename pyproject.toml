@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{ include = "scrapy_db" }]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 scrapy = "^2.9.0"
 peewee = "^3.16.2"
 pytest = "^7.3.2"
