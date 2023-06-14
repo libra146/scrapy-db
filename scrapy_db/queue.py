@@ -1,4 +1,3 @@
-from scrapy.utils.reqser import request_to_dict
 from scrapy.utils.request import request_from_dict
 
 from scrapy_db.db import DBModel
@@ -36,10 +35,7 @@ class Base(object):
         :param request: request object
         :return: encode result
         """
-        try:
-            obj = request.to_dict(spider=self.spider)
-        except AttributeError:
-            obj = request_to_dict(request, self.spider)
+        obj = request.to_dict(spider=self.spider)
         return self.serializer.dumps(obj)
 
     def _decode_request(self, encoded_request):
