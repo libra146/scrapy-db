@@ -34,7 +34,7 @@ class DBDupeFilter(BaseDupeFilter):
         :param settings: Spider settings
         :return: Instance of the current class
         """
-        key = defaults.SCHEDULER_DUPEFILTER_TABLE % {'timestamp': int(time.time())}
+        key = defaults.SCHEDULER_DUPEFILTER_TABLE % {'spider': int(time.time())}
         table = DBModel.build_model_from_settings(settings, key, 'dupelifter')
         debug = settings.getbool('DUPEFILTER_DEBUG')
         return cls(table=table, debug=debug)

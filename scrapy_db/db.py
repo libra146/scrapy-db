@@ -147,7 +147,7 @@ class DBModel(BaseDB):
     def pop(self, timeout=0, desc=True, batch_size=None):
         if not batch_size:
             result = self.db.select().where(self.db.deleted == 0).order_by(
-                self.db.id.desc() if desc else self.db.id.asc()).limit(batch_size).first()
+                self.db.id.desc() if desc else self.db.id.asc()).limit(1).first()
             if result:
                 self._delete(result)
             return result
@@ -179,4 +179,4 @@ class DBModel(BaseDB):
         result = self.db.select().where(self.db.deleted == 0).order_by(self.db.score.desc()).limit(1).first()
         if result:
             self._delete(result)
-        return result.key if result else None
+        return result if result else None
