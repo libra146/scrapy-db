@@ -1,8 +1,6 @@
 import logging
 
 from scrapy import Request
-from scrapy.crawler import CrawlerProcess
-from scrapy.utils.project import get_project_settings
 
 from example.items import TestItem
 from scrapy_db.spiders import DBSpider
@@ -37,10 +35,3 @@ class DemoSpider(DBSpider):
         item['director'] = response.xpath(
             '//div[@class="directors el-row"]//p[@class="name text-center m-b-none m-t-xs"]/text()').get()
         yield item
-
-
-if __name__ == '__main__':
-    settings = get_project_settings()
-    process = CrawlerProcess(settings, install_root_handler=False)
-    process.crawl(DemoSpider)
-    process.start()  # the script will block here until all crawling jobs are finished

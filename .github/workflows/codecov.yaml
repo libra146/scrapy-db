@@ -1,4 +1,4 @@
-name: API workflow
+name: Build
 
 on: [ push, pull_request ]
 
@@ -20,4 +20,5 @@ jobs:
         run: poetry run python -m pytest --cov=scrapy_db/ --cov-report=xml
 
       - name: Upload coverage reports to Codecov
+        if: ${{ github.event_name == 'pull_request' }}
         uses: codecov/codecov-action@v3

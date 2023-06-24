@@ -1,24 +1,40 @@
 [tool.poetry]
 name = "scrapy-db"
 version = "0.0.1"
-description = ""
+description = "Similar to [scrapy-redis](https://github.com/rmax/scrapy-redis), using the database as a queue, database-based scrapy components."
 authors = ["libra146 <shumeipai146@gmail.com>"]
 readme = "README.md"
 packages = [{ include = "scrapy_db" }]
+license = "GPL-3.0-only"
+homepage = "https://github.com/libra146/scrapy-db/blob/main/README.md"
+repository = "https://github.com/libra146/scrapy-db"
+documentation = "https://github.com/libra146/scrapy-db/blob/main/README.md"
+classifiers = [
+    'Natural Language :: English',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-scrapy = "^2.9.0"
-peewee = "^3.16.2"
+scrapy = "2.7.0"
+peewee = "^3.16.0"
+pymysql = "^1.0.3"
+
+[tool.poetry.group.test.dependencies]
 pytest = "^7.3.2"
 pytest-mock = "^3.10.0"
-urllib3 = "1.26.16"
-pymysql = "^1.0.3"
-twine = "^4.0.2"
 codecov = "^2.1.13"
 pytest-cov = "^4.1.0"
-
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+#[[tool.poetry.source]]
+#name = "test"
+#url = "https://test.pypi.org/simple/"
+#priority = "default"
