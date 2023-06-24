@@ -21,4 +21,4 @@ jobs:
 
       - name: Publish to PyPI
         run: |
-          poetry publish --build --username __token__ --password PYPI_TOKEN
+          poetry publish --build --username __token__ --password $PYPI_TOKEN
