@@ -20,7 +20,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-scrapy = "2.7.0"
+scrapy = "^2.7.0"
 peewee = "^3.16.0"
 pymysql = "^1.0.3"
 
