@@ -15,10 +15,9 @@ jobs:
       - run: |
           python -m pip install --upgrade poetry
           poetry install
+      - name: Publish to PyPI
+        run: |
+          poetry publish --build --username __token__ --password $PYPI_TOKEN
         env:
           TEST_PYPI_TOKEN: ${{ secrets.TEST_PYPI_TOKEN }}
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-
-      - name: Publish to PyPI
-        run: |
-          publish --build --username __token__ --password PYPI_TOKEN

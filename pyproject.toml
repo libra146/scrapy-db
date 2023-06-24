@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "scrapy-db"
-version = "0.0.1"
+version = "0.0.2"
 description = "Similar to [scrapy-redis](https://github.com/rmax/scrapy-redis), using the database as a queue, database-based scrapy components."
 authors = ["libra146 <shumeipai146@gmail.com>"]
 readme = "README.md"
@@ -20,7 +20,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-scrapy = "2.7.0"
+scrapy = "^2.7.0"
 peewee = "^3.16.0"
 pymysql = "^1.0.3"
 
