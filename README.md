@@ -59,3 +59,8 @@ Clone the current project and run the example crawler in example-project to expe
 ## ❗️Notice
 
 This repository is still under development and may be unstable.
+
+## Why is there this library
+
+Because I have a huge request pool, I don't have that much memory for redis to save it, so, I thought about database, I
+created it with reference to scrapy-redis and it works fine.
