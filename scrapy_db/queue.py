@@ -66,7 +66,7 @@ class FifoQueue(Base):
     def pop(self, timeout=0):
         result = self.db.pop(timeout, desc=False)
         if result:
-            return self._decode_request(result)
+            return self._decode_request(result.key_)
 
 
 class PriorityQueue(Base):
@@ -79,7 +79,7 @@ class PriorityQueue(Base):
     def pop(self, timeout=0):
         result = self.db.pop_by_score(timeout)
         if result:
-            return self._decode_request(result)
+            return self._decode_request(result.key_)
 
 
 class LifoQueue(Base):
@@ -87,4 +87,4 @@ class LifoQueue(Base):
     def pop(self, timeout=0):
         result = self.db.pop(timeout)
         if result:
-            return self._decode_request(result)
+            return self._decode_request(result.key_)
