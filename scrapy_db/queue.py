@@ -52,7 +52,7 @@ class Base(object):
         return len(self.db)
 
     def push(self, request):
-        self.db.push(**{'key': self._encode_request(request)})
+        self.db.push(**{'key_': self._encode_request(request)})
 
     def pop(self, timeout=0):
         raise NotImplementedError
@@ -66,7 +66,7 @@ class FifoQueue(Base):
     def pop(self, timeout=0):
         result = self.db.pop(timeout, desc=False)
         if result:
-            return self._decode_request(result)
+            return self._decode_request(result.key_)
 
 
 class PriorityQueue(Base):
@@ -74,12 +74,12 @@ class PriorityQueue(Base):
     def push(self, request):
         data = self._encode_request(request)
         score = -request.priority
-        self.db.push(**{'key': data, 'score': score})
+        self.db.push(**{'key_': data, 'score': score})
 
     def pop(self, timeout=0):
         result = self.db.pop_by_score(timeout)
         if result:
-            return self._decode_request(result)
+            return self._decode_request(result.key_)
 
 
 class LifoQueue(Base):
@@ -87,4 +87,4 @@ class LifoQueue(Base):
     def pop(self, timeout=0):
         result = self.db.pop(timeout)
         if result:
-            return self._decode_request(result)
+            return self._decode_request(result.key_)

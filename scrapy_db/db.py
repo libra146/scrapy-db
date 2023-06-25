@@ -79,14 +79,14 @@ def get_model_class_for_db(name, attrs) -> Model:
 # A dictionary that stores the fields of the model class
 _params = {
     'dupelifter': {
-        'key': CharField(),
+        'key_': CharField(),
     },
     'start_url': {
         'start_url': CharField(),
         'deleted': BooleanField(default=False)
     },
     'queue': {
-        'key': CharField(max_length=10000),
+        'key_': CharField(max_length=10000),
         'score': IntegerField(index=True),
         'deleted': BooleanField(default=False)
     }
