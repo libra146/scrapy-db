@@ -26,27 +26,27 @@ def test_db_connection(get_queue_db):
 
     assert get_db.db.select().count() == 0
 
-    get_db.db.create(**{'key': '111', 'score': 1})
-    get_db.db.create(**{'key': '222', 'score': 1})
-    get_db.db.create(**{'key': '333', 'score': 1})
+    get_db.db.create(**{'key_': '111', 'score': 1})
+    get_db.db.create(**{'key_': '222', 'score': 1})
+    get_db.db.create(**{'key_': '333', 'score': 1})
     assert get_db.db.select().count() == 3
 
-    get_db.push(**{'key': '444', 'score': 1})
+    get_db.push(**{'key_': '444', 'score': 1})
     assert get_db.db.select().count() == 4
 
     data = get_db.pop()
-    assert data.key == '444'
+    assert data.key_ == '444'
     assert data.id == 4
     assert len(get_db) == 3
 
     data = get_db.pop(desc=False)
-    assert data.key == '111'
+    assert data.key_ == '111'
     assert data.id == 1
     assert len(get_db) == 2
 
     result = get_db.pop(batch_size=1)
     assert len(result) == 1
-    assert result[0].key == '333'
+    assert result[0].key_ == '333'
 
     get_db.pop()
     assert len(get_db) == 0
@@ -56,20 +56,20 @@ def test_db_connection(get_queue_db):
     get_db.pop(timeout=0.3)
     assert 0.4 >= time.time() - t >= 0.3
 
-    get_db.push(**{'key': '555', 'score': 1})
+    get_db.push(**{'key_': '555', 'score': 1})
     data = get_db.pop(timeout=2)
     assert data.id == 5
-    assert data.key == '555'
+    assert data.key_ == '555'
 
-    get_db.push(**{'key': 'bbb', 'score': 1})
+    get_db.push(**{'key_': 'bbb', 'score': 1})
     result = get_db.fetch_data()
     assert len(result) == 1
-    assert result[0].key == 'bbb'
+    assert result[0].key_ == 'bbb'
 
-    get_db.push(**{'key': 'ccc', 'score': 1})
+    get_db.push(**{'key_': 'ccc', 'score': 1})
     result = get_db.pop_by_score()
     assert result is not None
-    assert result.key == 'ccc'
+    assert result.key_ == 'ccc'
     result = get_db.pop_by_score()
     assert result is None
 
