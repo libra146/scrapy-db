@@ -56,10 +56,8 @@ class BaseDB(metaclass=ABCMeta):
 
 # The default fields for model classes
 _attributes = {'id': BigAutoField(primary_key=True),
-               'create_time': DateTimeField(default=datetime.datetime.now,
-                                            constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')]),
-               'update_time': DateTimeField(default=datetime.datetime.now,
-                                            constraints=[SQL('ON UPDATE CURRENT_TIMESTAMP')]),
+               'create_time': DateTimeField(constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')]),
+               'update_time': DateTimeField(constraints=[SQL('ON UPDATE CURRENT_TIMESTAMP')]),
                'Meta': type('Meta', (object,), {'table_name': None, 'database': None})}
 
 
