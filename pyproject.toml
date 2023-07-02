@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "scrapy-db"
-version = "0.0.4"
+version = "0.0.5"
 description = "Similar to [scrapy-redis](https://github.com/rmax/scrapy-redis), using the database as a queue, database-based scrapy components."
 authors = ["libra146 <shumeipai146@gmail.com>"]
 readme = "README.md"
