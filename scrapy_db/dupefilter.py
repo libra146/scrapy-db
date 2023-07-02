@@ -59,7 +59,8 @@ class DBDupeFilter(BaseDupeFilter):
         # request_fingerprint remove warnings
         fp = fingerprint(request).hex()
         added = self.table.db.select().where(self.table.db.key_ == fp).count()
-        self.table.push(**{'key_': fp})
+        if added == 0:
+            self.table.push(**{'key_': fp})
         return added != 0
 
     @classmethod
