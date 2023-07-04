@@ -1,5 +1,4 @@
 import time
-from collections.abc import Iterable
 
 from scrapy import signals, FormRequest
 from scrapy.exceptions import DontCloseSpider
@@ -44,9 +43,6 @@ class DBBase(object):
 
         self.table_name = self.table_name % {'spider': self.name}
 
-        if not self.table_name.strip():
-            raise ValueError("table_name must not be empty")
-
         if self.db_batch_size is None:
             self.db_batch_size = settings.getint('CONCURRENT_REQUESTS')
 
@@ -76,15 +72,10 @@ class DBBase(object):
 
     def next_requests(self):
         found = 0
-        datas = self.db.fetch_data(batch_size=self.db_batch_size)
+        datas = self.db.fetch_data(self.db_batch_size)
         for data in datas:
             reqs = self.make_request_from_data(data)
-            if isinstance(reqs, Iterable):
-                for req in reqs:
-                    yield req
-                    found += 1
-                    self.logger.info(f'start req url:{req.url}')
-            elif reqs:
+            if reqs:
                 yield reqs
                 found += 1
             else:
