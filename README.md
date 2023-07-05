@@ -1,6 +1,9 @@
 # scrapy-db
 
-[![codecov](https://codecov.io/github/libra146/scrapy-db/branch/main/graph/badge.svg?token=O9L0DVI0BR)](https://codecov.io/github/libra146/scrapy-db) [![build](https://github.com/libra146/scrapy-db/actions/workflows/codecov.yaml/badge.svg?branch=main)](https://github.com/libra146/scrapy-db/actions/workflows/codecov.yaml)
+[![codecov](https://codecov.io/github/libra146/scrapy-db/branch/main/graph/badge.svg?token=O9L0DVI0BR)](https://codecov.io/github/libra146/scrapy-db)
+[![build](https://github.com/libra146/scrapy-db/actions/workflows/codecov.yaml/badge.svg?branch=main)](https://github.com/libra146/scrapy-db/actions/workflows/codecov.yaml)
+![PyPI](https://img.shields.io/pypi/v/scrapy-db)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/scrapy-db)
 
 Similar to [scrapy-redis](https://github.com/rmax/scrapy-redis), using the database as a queue, database-based scrapy
 components.
