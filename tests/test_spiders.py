@@ -1,21 +1,13 @@
-import datetime
 import time
 from unittest import mock
 
 import pytest
-from peewee import DateTimeField, BigAutoField
 from scrapy import signals
 from scrapy.exceptions import DontCloseSpider
 from scrapy.settings import Settings
 
 from scrapy_db import defaults
 from scrapy_db.spiders import DBSpider, DBCrawlSpider
-
-# The default fields for model classes
-_attributes = {'id': BigAutoField(primary_key=True),
-               'create_time': DateTimeField(default=datetime.datetime.now),
-               'update_time': DateTimeField(default=datetime.datetime.now),
-               'Meta': type('Meta', (object,), {'table_name': None, 'database': None})}
 
 
 class MySpider(DBSpider):
@@ -46,8 +38,8 @@ def test_crawler_table_name(db):
     assert my_spider.table_name == defaults.START_URLS_TABLE % {'spider': my_spider.name}
 
 
-@mock.patch('scrapy_db.db._attributes', _attributes)
-def test_invalid_idle_time():
+@mock.patch('scrapy_db.spiders.DBModel')
+def test_invalid_idle_time(db):
     my_spider = MySpider()
     my_spider.max_idle_time = 'x'
     my_spider.crawler = get_crawler()
