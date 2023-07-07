@@ -106,7 +106,7 @@ class Scheduler(object):
         if len(self.queue):
             spider.log(f"Resuming crawl ({len(self.queue)} requests scheduled)")
 
-    def close(self, reason):
+    def close(self, reason=''):
         if not self.persist:
             self.flush()
 
