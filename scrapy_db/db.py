@@ -1,5 +1,4 @@
 import copy
-import datetime
 from abc import ABCMeta, abstractmethod
 
 from peewee import DateTimeField, CharField, BigAutoField, Model, IntegerField, SQL, BooleanField
