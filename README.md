@@ -4,6 +4,7 @@
 [![build](https://github.com/libra146/scrapy-db/actions/workflows/codecov.yaml/badge.svg?branch=main)](https://github.com/libra146/scrapy-db/actions/workflows/codecov.yaml)
 ![PyPI](https://img.shields.io/pypi/v/scrapy-db)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/scrapy-db)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/scrapy-db)
 
 Similar to [scrapy-redis](https://github.com/rmax/scrapy-redis), using the database as a queue, database-based scrapy
 components.
