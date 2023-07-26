@@ -56,7 +56,7 @@ class BaseDB(metaclass=ABCMeta):
 # The default fields for model classes
 _attributes = {'id': BigAutoField(primary_key=True),
                'create_time': DateTimeField(constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')]),
-               'update_time': DateTimeField(constraints=[SQL('ON UPDATE CURRENT_TIMESTAMP')]),
+               'update_time': DateTimeField(constraints=[SQL('DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')]),
                'Meta': type('Meta', (object,), {'table_name': None, 'database': None})}
 
 
@@ -80,12 +80,12 @@ _params = {
     },
     'start_url': {
         'start_url': CharField(),
-        'deleted': BooleanField(default=False)
+        'deleted': BooleanField(default=False, constraints=[SQL('DEFAULT 0')])
     },
     'queue': {
         'key_': CharField(max_length=10000),
-        'score': IntegerField(index=True),
-        'deleted': BooleanField(default=False)
+        'score': IntegerField(index=True, default=0, constraints=[SQL('DEFAULT 0')]),
+        'deleted': BooleanField(default=False, constraints=[SQL('DEFAULT 0')])
     }
 }
 
