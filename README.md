@@ -9,6 +9,8 @@
 Similar to [scrapy-redis](https://github.com/rmax/scrapy-redis), using the database as a queue, database-based scrapy
 components.
 
+## [中文文档](https://github.com/libra146/scrapy-db/blob/main/README_CN.md)
+
 ## Features
 
 - Distributed crawling/scraping

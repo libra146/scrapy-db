@@ -14,3 +14,6 @@ MAX_IDLE_TIME = 0
 
 # Timeout period if the queue is empty during scheduling
 SCHEDULER_IDLE_BEFORE_CLOSE = 0
+
+# Scheduler Serialization Class
+SCHEDULER_SERIALIZER = 'scrapy_db.utils.CustomPickle'

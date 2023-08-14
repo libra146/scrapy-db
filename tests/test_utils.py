@@ -1,6 +1,6 @@
 import time
 
-from scrapy_db.utils import execute_with_timeout, CustomPickle, is_dict
+from scrapy_db.utils import execute_with_timeout, CustomPickle, is_dict, HexPickle
 
 
 def test_execute_with_timeout(mocker):
@@ -53,3 +53,16 @@ def test_is_dict():
     assert is_dict(00) == 0
     assert isinstance(is_dict('aa'), str)
     assert isinstance(is_dict('{}'), dict)
+
+
+def test_hex_pickle():
+    a = {'test123': 'test value', 'test bytes': b'test bytes'}
+    r = HexPickle.dumps(a)
+    assert isinstance(r, str)
+    assert r == ('80049536000000000000007d94288c0774657374313233948c0a746573742076'
+                 '616c7565948c0a7465737420627974657394430a7465737420627974657394752e')
+
+    r = HexPickle.loads(r)
+    assert isinstance(r, dict)
+    assert r['test123'] == 'test value'
+    assert isinstance(r['test bytes'], bytes)

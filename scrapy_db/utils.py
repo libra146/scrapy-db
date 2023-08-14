@@ -33,6 +33,16 @@ class CustomPickle(object):
         return base64.b64encode(pickle.dumps(*args, **kwargs)).decode()
 
 
+class HexPickle(object):
+    @staticmethod
+    def loads(data):
+        return pickle.loads(bytes.fromhex(data))
+
+    @staticmethod
+    def dumps(*args, **kwargs):
+        return pickle.dumps(*args, **kwargs).hex()
+
+
 def execute_with_timeout(func):
     def inner(*args, **kwargs):
         timeout_ = kwargs.get('timeout', 0)
